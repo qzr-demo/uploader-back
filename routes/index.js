@@ -3,7 +3,7 @@
  * @Description  : 
  * @Autor        : Qzr(z5021996@vip.qq.com)
  * @LastEditors  : Qzr(z5021996@vip.qq.com)
- * @LastEditTime : 2022-04-01 16:29:58
+ * @LastEditTime : 2022-04-06 08:54:01
  */
 
 const router = require('koa-router')()
@@ -90,6 +90,23 @@ router.post('/api/mergeChunks', async (ctx) => {
     message: 'merge chunks successful！'
   });
 });
+
+router.post('/api/check', ctx => {
+  const {hash, name} = ctx.request.body
+
+  const filePaths = fs.readdirSync(chunkDir)
+
+  // 处理响应
+  ctx.set("Content-Type", "application/json");
+  ctx.body = JSON.stringify({
+    data: {
+      code: 2000,
+      name,
+      hash
+    },
+    message: 'merge chunks successful！'
+  });
+})
 
 // 通过管道处理流 
 const pipeStream = (path, writeStream) => {
